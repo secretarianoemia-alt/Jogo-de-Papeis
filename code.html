@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Papéis - Design Thinking na Educação</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        p {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .intro {
+            padding: 40px;
+            background: #f8f9fa;
+            border-bottom: 3px solid #e9ecef;
+        }
+
+        .cenarios-section {
+            padding: 40px;
+        }
+
+        .controls {
+            background: #e3f2fd;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 3px solid #bbdefb;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.6rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .cenario-card {
+            background: white;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-left: 6px solid #4facfe;
+            display: none;
+        }
+
+        .cenario-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .cenario-numero {
+            background: #4facfe;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .cenario-texto {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+
+        .roles {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .roles h4 {
+            font-size: 1.6rem;
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .roles ul {
+            font-size: 1.4rem;
+            padding-left: 30px;
+        }
+
+        .roles li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #2c3e50;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.6rem; }
+            p, .cenario-texto { font-size: 1.2rem; }
+            button { font-size: 1.4rem; padding: 15px 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 Jogo de Papéis</h1>
+            <h2>Design Thinking na Formação de Professores</h2>
+            <p>Novos olhares para os desafios da educação</p>
+        </header>
+
+        <section class="intro">
+            <h3>Como Funciona a Dinâmica</h3>
+            <p>Esta atividade permite explorar diferentes perspectivas sobre desafios educacionais através do design thinking. Cada cenário apresenta uma situação real que professores podem enfrentar.</p>
+            
+            <div class="roles">
+                <h4>📋 Papéis Sugeridos para os Participantes:</h4>
+                <ul>
+                    <li><strong>Professor:</strong> Representa a visão do educador</li>
+                    <li><strong>Aluno:</strong> Traz a perspectiva do estudante</li>
+                    <li><strong>Coordenador Pedagógico:</strong> Considera aspectos administrativos</li>
+                    <li><strong>Pai/Mãe:</strong> Representa a família e comunidade</li>
+                    <li><strong>Especialista em Design Thinking:</strong> Guia o processo criativo</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="controls">
+            <button onclick="sortearCenario()">🎲 Sortear Cenário Aleatório</button>
+            <button onclick="proximoCenario()">➡️ Próximo Cenário</button>
+            <button onclick="imprimirCenarios()">🖨️ Imprimir Cenários</button>
+        </section>
+
+        <section class="cenarios-section">
+            <h3>📚 Cenários para Discussão</h3>
+            
+            <div class="cenario-card" id="cenario-1">
+                <div class="cenario-numero">1</div>
+                <div class="cenario-texto">
+                    Um professor recém-formado está com dificuldades para engajar alunos do ensino fundamental em aulas de matemática. Os estudantes demonstram desinteresse e baixo desempenho nas avaliações.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-2">
+                <div class="cenario-numero">2</div>
+                <div class="cenario-texto">
+                    Uma escola rural precisa adaptar seu currículo para atender estudantes com realidades socioeconômicas muito diversas, desde filhos de agricultores até crianças de famílias urbanas que se mudaram recentemente.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-3">
+                <div class="cenario-numero">3</div>
+                <div class="cenario-texto">
+                    Professores experientes resistem à implementação de novas tecnologias em sala de aula, alegando que métodos tradicionais sempre funcionaram e que não têm tempo para aprender ferramentas digitais.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-4">
+                <div class="cenario-numero">4</div>
+                <div class="cenario-texto">
+                    Uma escola pública precisa criar estratégias para incluir alunos com deficiência visual em aulas de ciências, onde atividades práticas e visuais são predominantes.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-5">
+                <div class="cenario-numero">5</div>
+                <div class="cenario-texto">
+                    Os pais reclamam que os professores não estão preparados para lidar com questões de saúde mental dos alunos, como ansiedade e depressão, que aumentaram significativamente pós-pandemia.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-6">
+                <div class="cenario-numero">6</div>
+                <div class="cenario-texto">
+                    Uma escola precisa desenvolver um programa de formação continuada para professores que trabalham com educação de jovens e adultos (EJA), considerando as particularidades desse público.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-7">
+                <div class="cenario-numero">7</div>
+                <div class="cenario-texto">
+                    Professores relatam dificuldade em avaliar competências socioemocionais dos alunos, já que o sistema tradicional foca apenas em avaliações quantitativas de conteúdo.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-8">
+                <div class="cenario-numero">8</div>
+                <div class="cenario-texto">
+                    Uma escola particular de elite precisa repensar seu projeto pedagógico para incluir valores de diversidade, equidade e inclusão, enfrentando resistência de famílias conservadoras.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-9">
+                <div class="cenario-numero">9</div>
+                <div class="cenario-texto">
+                    Professores de educação física precisam adaptar suas aulas para alunos com diferentes habilidades motoras, incluindo crianças com obesidade, deficiências e altas habilidades.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-10">
+                <div class="cenario-numero">10</div>
+                <div class="cenario-texto">
+                    Uma escola precisa criar um programa de mentoria entre professores experientes e iniciantes, mas os veteranos não veem valor na iniciativa e sentem que é mais trabalho extra.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-11">
+                <div class="cenario-numero">11</div>
+                <div class="cenario-texto">
+                    Alunos do ensino médio demonstram desinteresse pelas aulas de história, considerando o conteúdo desconectado de suas realidades e do mundo contemporâneo.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-12">
+                <div class="cenario-numero">12</div>
+                <div class="cenario-texto">
+                    Professores precisam aprender a usar inteligência artificial como ferramenta pedagógica, mas têm medo de que a tecnologia substitua seu papel ou seja usada para plagiar trabalhos.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-13">
+                <div class="cenario-numero">13</div>
+                <div class="cenario-texto">
+                    Uma comunidade indígena quer que a escola local incorpore saberes tradicionais no currículo, mas os professores não foram formados para trabalhar com essa perspectiva intercultural.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-14">
+                <div class="cenario-numero">14</div>
+                <div class="cenario-texto">
+                    Professores relatam esgotamento mental (burnout) devido à sobrecarga de trabalho, cobranças excessivas e falta de reconhecimento social da profissão.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-15">
+                <div class="cenario-numero">15</div>
+                <div class="cenario-texto">
+                    Uma escola precisa desenvolver estratégias para combater o bullying digital entre alunos, um problema que acontece principalmente fora do horário escolar mas afeta o ambiente educacional.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-16">
+                <div class="cenario-numero">16</div>
+                <div class="cenario-texto">
+                    Professores de artes querem integrar seu conteúdo com outras disciplinas, mas encontram resistência de colegas que consideram artes uma matéria "menos importante".
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-17">
+                <div class="cenario-numero">17</div>
+                <div class="cenario-texto">
+                    Uma escola precisa adaptar seu espaço físico para ser mais inclusivo e propício ao aprendizado colaborativo, mas tem orçamento limitado e infraestrutura antiga.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-18">
+                <div class="cenario-numero">18</div>
+                <div class="cenario-texto">
+                    Professores enfrentam desafios para ensinar pensamento crítico e checagem de fatos em uma era de desinformação e notícias falsas nas redes sociais.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-19">
+                <div class="cenario-numero">19</div>
+                <div class="cenario-texto">
+                    Uma escola precisa criar um programa de educação sexual adequado para diferentes faixas etárias, enfrentando resistência de grupos conservadores da comunidade.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-20">
+                <div class="cenario-numero">20</div>
+                <div class="cenario-texto">
+                    Professores querem implementar aprendizagem baseada em projetos, mas se sentem limitados pelo currículo rígido e pela necessidade de preparar alunos para vestibulares tradicionais.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-21">
+                <div class="cenario-numero">21</div>
+                <div class="cenario-texto">
+                    Uma escola precisa desenvolver estratégias para envolver famílias no processo educacional, especialmente em comunidades onde os pais têm baixa escolaridade ou trabalham em múltiplos turnos.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-22">
+                <div class="cenario-numero">22</div>
+                <div class="cenario-texto">
+                    Professores de língua portuguesa querem tornar o ensino de gramática mais significativo para alunos que usam linguagens informais nas redes sociais.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-23">
+                <div class="cenario-numero">23</div>
+                <div class="cenario-texto">
+                    Uma escola precisa criar um programa de educação ambiental que vá além da teoria e promova mudanças reais de comportamento na comunidade escolar.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-24">
+                <div class="cenario-numero">24</div>
+                <div class="cenario-texto">
+                    Professores enfrentam desafios para avaliar aprendizagens em modelos híbridos de ensino, onde alguns alunos estão presencialmente e outros remotamente.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-25">
+                <div class="cenario-numero">25</div>
+                <div class="cenario-texto">
+                    Uma escola quer implementar meditação e mindfulness para reduzir ansiedade dos alunos, mas pais questionam se isso é "perda de tempo" que deveria ser usado com conteúdo tradicional.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-26">
+                <div class="cenario-numero">26</div>
+                <div class="cenario-texto">
+                    Professores precisam aprender a identificar e desenvolver talentos em alunos com altas habilidades/superdotação, um grupo frequentemente negligenciado no sistema educacional.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-27">
+                <div class="cenario-numero">27</div>
+                <div class="cenario-texto">
+                    Uma escola com muitos alunos imigrantes precisa desenvolver estratégias para integrar diferentes culturas e lidar com barreiras linguísticas.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-28">
+                <div class="cenario-numero">28</div>
+                <div class="cenario-texto">
+                    Professores querem usar jogos educativos digitais, mas enfrentam restrições da escola sobre uso de celulares e preocupações com tempo excessivo de tela.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-29">
+                <div class="cenario-numero">29</div>
+                <div class="cenario-texto">
+                    Uma escola precisa desenvolver um programa de educação financeira que seja relevante para estudantes de diferentes contextos socioeconômicos.
+                </div>
+            </div>
+
+            <div class="cenario-card" id="cenario-30">
+                <div class="cenario-numero">30</div>
+                <div class="cenario-texto">
+                    Professores querem criar uma cultura de feedback contínuo entre alunos, mas enfrentam resistência de estudantes acostumados com modelos tradicionais de avaliação.
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 - Dinâmica de Design Thinking na Formação de Professores</p>
+            <p>Desenvolvido para promover reflexão e soluções criativas na educação</p>
+        </footer>
+    </div>
+
+    <script>
+        let cenarioAtual = 0;
+        const totalCenarios = 30;
+
+        function esconderTodosCenarios() {
+            document.querySelectorAll('.cenario-card').forEach(card => {
+                card.classList.remove('active');
+            });
+        }
+
+        function mostrarCenario(numero) {
+            esconderTodosCenarios();
+            const cenario = document.getElementById(`cenario-${numero}`);
+            if (cenario) {
+                cenario.classList.add('active');
+                cenario.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function sortearCenario() {
+            const numeroSorteado = Math.floor(Math.random() * totalCenarios) + 1;
+            cenarioAtual = numeroSorteado;
+            mostrarCenario(numeroSorteado);
+        }
+
+        function proximoCenario() {
+            cenarioAtual =
